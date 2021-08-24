@@ -30,8 +30,10 @@
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 
         <!-- 第三方工具 -->
+        <dubbo.version>2.7.8</dubbo.version>
         <guava.version>30.1.1-jre</guava.version>
         <fastjson.version>1.2.78</fastjson.version>
+        <hutool-all.version>5.7.7</hutool-all.version>
 
     </properties>
 
@@ -54,6 +56,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>${dubbo.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -69,6 +77,13 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>

@@ -7,4 +7,7 @@ import lombok.Data;
  */
 @Data
 public class TracerProperties {
+    public static final String TRACE_ID = "traceId";
+
+    private String traceId = TRACE_ID;
 }
