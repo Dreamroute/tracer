@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/tracer-spring-boot-starter/.flattened-pom.xml
+/.flattened-pom.xml

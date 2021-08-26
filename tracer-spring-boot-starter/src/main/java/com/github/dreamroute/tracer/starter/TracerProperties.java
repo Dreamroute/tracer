@@ -1,13 +1,9 @@
-package com.github.dreamroute.tracer.starter.config;
-
-import lombok.Data;
+package com.github.dreamroute.tracer.starter;
 
 /**
  * @author w.dehai.2021/8/23.10:10
  */
-@Data
 public class TracerProperties {
+    private TracerProperties() {}
     public static final String TRACE_ID = "traceId";
-
-    private String traceId = TRACE_ID;
 }
