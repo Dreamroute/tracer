@@ -10,7 +10,7 @@
 
     <artifactId>tracer-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <description>链路跟踪</description>
+    <description>链路跟踪-trace id打印</description>
     <url>https://github.com/Dreamroute/tracer</url>
     <scm>
         <url>${project.url}</url>
