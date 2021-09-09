@@ -8,6 +8,12 @@
 </dependency>
 ```
 
+##### 支持如下配置
+```properties
+# 是否开启trace id打印
+tracer.enable-trace-id=true
+```
+
 #### 2、初始化trace id
 在服务消费端创建一个过滤器，如果已经存在过滤器了（拦截器也可以，只要是在请求入口处即可），那么在存在的过滤器基础之上改造也可，如果有多个过滤器，最好将这部分逻辑放在最外层过滤器中，在过滤器中实现大概如下逻辑：
 ```java
@@ -47,4 +53,22 @@ public class JavaFilter implements Filter {
  </appender>
 ```
 
-##### 5、结束，如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
+#### 5、如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
+
+#### 6、方法参数打印
+1. 如果需要打印比如`controller, service, mapper`等的调用参数，可以配置
+```properties
+# 是否开启方法参数打印 
+tracer.enable-print-args=true
+
+# 开启方法参数打印时，需要拦截的方法，支持Spring AOP表达式 
+tracer.execution-expression=execution(public * com.example.disco.controller..*.*(..))
+```
+2. `tracer.execution-expression`表达式支持Spring AOP表达式，多个目录配置如下：
+```properties
+tracer.execution-expression=execution(public * com.example.disco.controller..*.*(..)) || execution(public * com.example.disco.service.impl..*.*(..)) || execution(public * com.github.dreamroute.mybatis.pro.service.service..*.*(..)) || execution(public * com.example.disco.mapper..*.*(..))
+```
+3. 打印的参数如下：
+```
+2021-09-09 16:27:45.475  INFO 37000 --- [nio-8080-exec-2] c.g.d.t.s.ArgsPrinterAutoConfiguration   : 方法: com.example.disco.controller.UserController.login, 参数: [{"name":"w.dehai","password":"123456"}]
+```

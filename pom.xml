@@ -18,7 +18,7 @@
 
     <properties>
         <!-- 版本信息 -->
-        <revision>1.0-RELEASE</revision>
+        <revision>1.1-RELEASE</revision>
 
         <!-- 编码相关 -->
         <java.version>1.8</java.version>
@@ -82,6 +82,11 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
 
     </dependencies>
