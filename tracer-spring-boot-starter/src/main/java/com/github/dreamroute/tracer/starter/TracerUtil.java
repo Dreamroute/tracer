@@ -5,6 +5,8 @@ import org.slf4j.MDC;
 import static com.github.dreamroute.tracer.starter.TracerProperties.TRACE_ID;
 
 /**
+ * trace id工具类，用于包装SLF4J的MDC
+ *
  * @author w.dehai.2021/8/26.15:23
  */
 public class TracerUtil {
