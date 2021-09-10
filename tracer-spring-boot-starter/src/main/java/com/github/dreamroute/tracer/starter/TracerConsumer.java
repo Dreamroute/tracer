@@ -7,7 +7,6 @@ import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
-import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
@@ -20,9 +19,9 @@ public class TracerConsumer implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        String traceId = MDC.get(TracerProperties.TRACE_ID);
+        String traceId = TracerUtil.getTraceId();
         if (!StringUtils.isEmpty(traceId)) {
-            RpcContext.getContext().set(TracerProperties.TRACE_ID, traceId);
+            RpcContext.getContext().setObjectAttachment(TracerProperties.TRACE_ID, traceId);
         }
         return invoker.invoke(invocation);
     }

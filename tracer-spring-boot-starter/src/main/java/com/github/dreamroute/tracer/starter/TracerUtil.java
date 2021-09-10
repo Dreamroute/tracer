@@ -16,6 +16,10 @@ public class TracerUtil {
         MDC.put(TRACE_ID, traceId);
     }
 
+    public static String getTraceId() {
+        return MDC.get(TRACE_ID);
+    }
+
     public static void clearTraceId() {
         MDC.remove(TRACE_ID);
     }
