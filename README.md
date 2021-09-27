@@ -4,14 +4,14 @@
 <dependency>
     <groupId>com.github.dreamroute</groupId>
     <artifactId>tracer-spring-boot-starter</artifactId>
-    <version>latest version</version>
+    <version>最新版本</version>
 </dependency>
 ```
 
 ##### 支持如下配置
 ```properties
-# 是否开启trace id打印
-tracer.enable-trace-id=true
+# 是否开启trace id打印【默认开启】
+tracer.enable-trace-id = true
 ```
 
 #### 2、初始化trace id
@@ -36,7 +36,7 @@ public class JavaFilter implements Filter {
 4. 在`com.alibaba.dubbo.rpc.Filter`文件里加入内容：
    1. 如果是服务消费方，添加`TracerConsumer = com.github.dreamroute.tracer.starter.TracerConsumer`
    2. 如果是服务提供方，添加`TracerProvider = com.github.dreamroute.tracer.starter.TracerProvider`
-   3. 如果既是消费方又是提供方，则将上面两行都填加进去
+   3. 如果既是消费方又是提供方，则将上面两行都填加进去，写成两行
 
 #### 4、logback.xml文件格式的修改
 在logback.xml的`<appender>/<encoder>/<Pattern>`标签下增加[%X{traceId}]配置，例如:
@@ -56,19 +56,15 @@ public class JavaFilter implements Filter {
 #### 5、如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
 
 #### 6、方法参数打印
+> 目的是为了排查问题的时候方便一点，可以在日志文件中明确查看到各个方法的入参
 1. 如果需要打印比如`controller, service, mapper`等的调用参数，可以配置
 ```properties
-# 是否开启方法参数打印 
-tracer.enable-print-args=true
-
-# 开启方法参数打印时，需要拦截的方法，支持Spring AOP表达式 
-tracer.execution-expression=execution(public * com.example.disco.controller..*.*(..))
+# 是否开起方法参数打印【默认开启】
+tracer.enablePrintArgs = true
+# 需要打印方法参数的包，多个用逗号分割
+tracer.packages = xxx.controller, xxx.service, xxx.mapper
 ```
-2. `tracer.execution-expression`表达式支持Spring AOP表达式，多个目录配置如下：
-```properties
-tracer.execution-expression=execution(public * com.example.disco.controller..*.*(..)) || execution(public * com.example.disco.service.impl..*.*(..)) || execution(public * com.github.dreamroute.mybatis.pro.service.service..*.*(..)) || execution(public * com.example.disco.mapper..*.*(..))
-```
-3. 打印的参数如下：
+2打印的参数如下：
 ```
 2021-09-09 16:27:45.475  INFO 37000 --- [nio-8080-exec-2] c.g.d.t.s.ArgsPrinterAutoConfiguration   : 方法: com.example.disco.controller.UserController.login, 参数: [{"name":"w.dehai","password":"123456"}]
 ```
