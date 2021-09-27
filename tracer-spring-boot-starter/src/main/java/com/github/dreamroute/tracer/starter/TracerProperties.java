@@ -23,15 +23,15 @@ public class TracerProperties {
     private boolean enablePrintArgs = true;
 
     /**
-     * 参数打印拦截的方法，为Spring AOP的表达式，
+     * 参数打印拦截的包
      * <p>
-     *     单个例如: execution(public * com.example.disco.controller..*.*(..)) <br/>
+     * 单个例如: com.example.disco.controller <br/>
      * </p>
-     *<p>
-     * 多个例如: execution(public * com.example.disco.controller..*.*(..)) || execution(public * com.example.disco.service.impl..*.*(..)) || execution(public * com.github.dreamroute.mybatis.pro.service.service..*.*(..)) || execution(public * com.example.disco.mapper..*.*(..))
-     *</p>
+     * <p>
+     * 多个用逗号分割，例如: com.example.disco.controller, com.example.disco.service.impl
+     * </p>
      */
-    private String executionExpression;
+    private String packages;
 
 
 }
