@@ -54,17 +54,3 @@ public class JavaFilter implements Filter {
 ```
 
 #### 5、如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
-
-#### 6、方法参数打印
-> 目的是为了排查问题的时候方便一点，可以在日志文件中明确查看到各个方法的入参
-1. 如果需要打印比如`controller, service, mapper`等的调用参数，可以配置
-```properties
-# 是否开起方法参数打印【默认开启】
-tracer.enablePrintArgs = true
-# 需要打印方法参数的包，多个用逗号分割
-tracer.packages = xxx.controller, xxx.service, xxx.mapper
-```
-2打印的参数如下：
-```
-2021-09-09 16:27:45.475  INFO 37000 --- [nio-8080-exec-2] c.g.d.t.s.ArgsPrinterAutoConfiguration   : 方法: com.example.disco.controller.UserController.login, 参数: [{"name":"w.dehai","password":"123456"}]
-```
