@@ -23,8 +23,12 @@ public class TracerProvider implements Filter {
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         String traceId = RpcContext.getContext().getAttachment(TRACE_ID);
         TracerUtil.setTraceId(traceId);
-        Result result = invoker.invoke(invocation);
-        TracerUtil.clearTraceId();
+        Result result;
+        try {
+            result = invoker.invoke(invocation);
+        } finally {
+            TracerUtil.clearTraceId();
+        }
         return result;
     }
 
