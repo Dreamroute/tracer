@@ -1,4 +1,4 @@
-# dubbo全局打印tracer id
+# dubbo全局打印trace id
 #### 1、引入依赖
 ```xml
 <dependency>
