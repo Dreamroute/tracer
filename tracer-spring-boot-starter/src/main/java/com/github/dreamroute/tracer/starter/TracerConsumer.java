@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 
 /**
+ * 过滤器消费端，用于写入trace id
+ *
  * @author w.dehai.2021/4/15.15:35
  */
 @Activate(group = CONSUMER)

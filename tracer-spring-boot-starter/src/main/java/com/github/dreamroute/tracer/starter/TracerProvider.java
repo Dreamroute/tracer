@@ -13,6 +13,8 @@ import static com.github.dreamroute.tracer.starter.TracerProperties.TRACE_ID;
 import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 
 /**
+ * 过滤器使用端，用于写入trace id
+ *
  * @author w.dehai.2021/4/15.15:35
  */
 @Slf4j
