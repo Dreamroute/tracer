@@ -98,6 +98,7 @@
 
     </dependencies>
 
+    <!--
     <distributionManagement>
         <repository>
             <id>jc</id>
@@ -108,6 +109,17 @@
             <name>Snapshots repository</name>
             <url>http://nexus.yzw.cn/repository/maven-snapshots/</url>
         </snapshotRepository>
+    </distributionManagement>
+    -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
     <build>
