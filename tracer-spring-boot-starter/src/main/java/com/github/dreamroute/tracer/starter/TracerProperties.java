@@ -9,7 +9,8 @@ import lombok.Data;
  */
 @Data
 public class TracerProperties {
+    private TracerProperties() {}
 
-    public static final String TRACE_ID = "traceId";
+    public static final String TRACER = "[TRACER]";
 
 }

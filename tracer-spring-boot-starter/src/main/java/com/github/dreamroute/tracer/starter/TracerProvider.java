@@ -9,7 +9,11 @@ import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 
-import static com.github.dreamroute.tracer.starter.TracerProperties.TRACE_ID;
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.github.dreamroute.tracer.starter.TracerProperties.TRACER;
 import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 
 /**
@@ -21,15 +25,28 @@ import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 @Activate(group = PROVIDER)
 public class TracerProvider implements Filter {
 
+    @Resource
+    private Tracer tracer;
+
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        String traceId = RpcContext.getContext().getAttachment(TRACE_ID);
-        TracerUtil.setTraceId(traceId);
+        Map<String, Object> attrs = RpcContext.getContext().getObjectAttachments();
+        if (attrs != null && !attrs.isEmpty()) {
+            Map<String, String> map = new HashMap<>();
+            attrs.forEach((k, v) -> {
+                if (k.startsWith(TRACER)) {
+                    map.put(k, (String) v);
+                }
+            });
+            if (!map.isEmpty()) {
+                tracer.set(map);
+            }
+        }
         Result result;
         try {
             result = invoker.invoke(invocation);
         } finally {
-            TracerUtil.clearTraceId();
+            tracer.clear();
         }
         return result;
     }
