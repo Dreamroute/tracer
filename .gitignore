@@ -33,3 +33,4 @@ build/
 .vscode/
 /tracer-spring-boot-starter/.flattened-pom.xml
 /.flattened-pom.xml
+/tracer-sample/.flattened-pom.xml
