@@ -9,19 +9,26 @@
 ```
 
 #### 2、初始化trace id
-在服务消费端创建一个过滤器，如果已经存在过滤器了（拦截器也可以，只要是在请求入口处即可），那么在存在的过滤器基础之上改造也可，如果有多个过滤器，最好将这部分逻辑放在最外层过滤器中，在过滤器中实现大概如下逻辑：
+在服务消费端创建一个过滤器，如果已经存在过滤器了（拦截器也可以），如果已经存在那么在存在的过滤器基础之上改造也可，如果有多个过滤器，最好将这部分逻辑放在最外层过滤器中，在过滤器中实现大概如下逻辑：
 ```java
-public class JavaFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
-        // traceId可以自定义，可以使用uuid，也可以把用户信息拼在里面，排查问题方便一点
-        // 这里举例使用的是uuid
-        String traceId = UUID.randomUUID().toString().replace("-", "");
-        TracerUtil.setTraceId(traceId);
-        chain.doFilter(request, response);
-        TracerUtil.clearTraceId();
-    }
+public class TracerFilter implements Filter {
+
+   @Resource
+   private Tracer tracer;
+
+   @Override
+   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+      // 可以设置多个需要传递的属性
+      Map<String, String> map = new HashMap<>();
+      map.put("traceId", UUID.fastUUID().toString(true));
+      map.put("traceUserId", UUID.fastUUID().toString(true));
+      map.put("traceLogId", UUID.fastUUID().toString(true));
+      tracer.set(map);
+      filterChain.doFilter(servletRequest, servletResponse);
+      tracer.clear();
+   }
 }
+
 ```
 
 #### 3、定义引入dubbo过滤器
