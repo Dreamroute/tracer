@@ -11,7 +11,6 @@ import org.apache.dubbo.rpc.RpcException;
 
 import java.util.Set;
 
-import static com.github.dreamroute.tracer.starter.TracerProperties.TRACER;
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 
 /**
@@ -32,7 +31,7 @@ public class TracerConsumer implements Filter {
             if (keys != null && !keys.isEmpty()) {
                 for (String key : keys) {
                     String v = tracer.get(key);
-                    RpcContext.getContext().setAttachment(TRACER + key, v);
+                    RpcContext.getContext().setAttachment(TracerProperties.TRACER + key, v);
                 }
             }
         }

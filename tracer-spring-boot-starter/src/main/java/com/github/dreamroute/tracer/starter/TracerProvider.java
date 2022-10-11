@@ -13,7 +13,6 @@ import org.apache.dubbo.rpc.RpcException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.github.dreamroute.tracer.starter.TracerProperties.TRACER;
 import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 
 /**
@@ -35,8 +34,8 @@ public class TracerProvider implements Filter {
             if (attrs != null && !attrs.isEmpty()) {
                 Map<String, String> map = new HashMap<>();
                 attrs.forEach((k, v) -> {
-                    if (k.startsWith(TRACER)) {
-                        k = k.replace(TRACER, "");
+                    if (k.startsWith(TracerProperties.TRACER)) {
+                        k = k.replace(TracerProperties.TRACER, "");
                         map.put(k, (String) v);
                     }
                 });

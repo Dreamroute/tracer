@@ -1,4 +1,4 @@
-package com.github.dreamroute.tracer.sample.config;
+package com.github.dreamroute.tracer.sample.consumer.config;
 
 import cn.hutool.core.lang.UUID;
 import com.github.dreamroute.tracer.starter.Tracer;

@@ -35,8 +35,8 @@ public class TracerFilter implements Filter {
 1. 创建`src/main/resource/META-INF/dubbo`目录（如果已经存在就忽略）；
 3. 在`dubbo`目录下创建文件`com.alibaba.dubbo.rpc.Filter`；
 4. 在`com.alibaba.dubbo.rpc.Filter`文件里加入内容：
-   1. 如果是服务消费方，添加`TracerConsumer = com.github.dreamroute.tracer.starter.TracerConsumer`
-   2. 如果是服务提供方，添加`TracerProvider = com.github.dreamroute.tracer.starter.TracerProvider`
+   1. 如果是服务消费方，添加`TracerConsumer = xxx.TracerConsumer`(xxx为全路径)
+   2. 如果是服务提供方，添加`TracerProvider = xxx.TracerProvider`(xxx为全路径)
    3. 如果既是消费方又是提供方，则将上面两行都填加进去，写成两行
 
 #### 4、logback.xml文件格式的修改

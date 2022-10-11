@@ -6,12 +6,17 @@
         <groupId>com.github.dreamroute</groupId>
         <version>${revision}</version>
     </parent>
-    <artifactId>tracer-sample</artifactId>
+    <artifactId>tracer-sample-consumer</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.github.dreamroute</groupId>
             <artifactId>tracer-spring-boot-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dreamroute</groupId>
+            <artifactId>tracer-sample-api</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
