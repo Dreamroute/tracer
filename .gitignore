@@ -34,3 +34,6 @@ build/
 /tracer-spring-boot-starter/.flattened-pom.xml
 /.flattened-pom.xml
 /tracer-sample/.flattened-pom.xml
+/tracer-sample-api/.flattened-pom.xml
+/tracer-sample-consumer/.flattened-pom.xml
+/tracer-sample-provider/.flattened-pom.xml
