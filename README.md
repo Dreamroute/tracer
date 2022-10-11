@@ -55,3 +55,7 @@ public class TracerFilter implements Filter {
 ```
 
 #### 5、如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
+
+#### 疑惑：
+1. ttl官网说使用TransmittableThreadLocal时，线程池需要被ttl修饰才能传参，但是我尝试了下使用TransmittableThreadLocal不使用ttl修饰也能传参，但是使用ThreadLocal就不行，基于这个特点MDC就能够实现多线程传参，就像单元测试TtlTest那样
+
