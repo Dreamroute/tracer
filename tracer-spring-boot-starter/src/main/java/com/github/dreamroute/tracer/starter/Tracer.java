@@ -20,6 +20,7 @@ import static org.slf4j.MDC.getMDCAdapter;
 public class Tracer {
 
     private static final String NAME = "copyOnThreadLocal";
+    private static final TransmittableThreadLocal<Map<String, String>> TARGET = new TransmittableThreadLocal<>(); // 定义成Tracer的类属性，避免被弱引用GC掉
 
     /**
      * 批量设置k，v
@@ -27,10 +28,16 @@ public class Tracer {
      * @param kv 需要设置的k，v
      */
     public void set(Map<String, String> kv) {
+        TARGET.remove(); // 避免线程池中的线程属性未被remove掉，再此入口处首先remove一下确保线程池中的线程此属性无旧数据
         MDCAdapter mdcAdapter = getMDCAdapter();
         Object tl = getFieldValue(mdcAdapter, NAME);
         if (!(tl instanceof TransmittableThreadLocal)) {
-            setFieldValue(mdcAdapter, NAME, new TransmittableThreadLocal<>());
+            ThreadLocal<Map<String, String>> copy = (ThreadLocal<Map<String, String>>) tl;
+            Map<String, String> map = copy.get();
+            if (map != null) {
+                TARGET.set(map);
+            }
+            setFieldValue(mdcAdapter, NAME, TARGET);
         }
         if (kv != null && !kv.isEmpty()) {
             kv.forEach(MDC::put);
