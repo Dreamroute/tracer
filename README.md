@@ -9,7 +9,7 @@
 ```
 
 #### 2、初始化trace id
-在服务消费端创建一个过滤器，如果已经存在过滤器了（拦截器也可以），如果已经存在那么在存在的过滤器基础之上改造也可，如果有多个过滤器，最好将这部分逻辑放在最外层过滤器中，在过滤器中实现大概如下逻辑：
+在服务消费端创建一个过滤器（拦截器也可以），如果已经存在那么在存在的过滤器基础之上改造也可，如果有多个过滤器，最好将这部分逻辑放在最外层过滤器中，在过滤器中实现大概如下逻辑：
 ```java
 public class TracerFilter implements Filter {
 
@@ -23,9 +23,12 @@ public class TracerFilter implements Filter {
       map.put("traceId", UUID.fastUUID().toString(true));
       map.put("traceUserId", UUID.fastUUID().toString(true));
       map.put("traceLogId", UUID.fastUUID().toString(true));
-      tracer.set(map);
-      filterChain.doFilter(servletRequest, servletResponse);
-      tracer.clear();
+      try {
+         tracer.set(map);
+         filterChain.doFilter(servletRequest, servletResponse);
+      } finally {
+         tracer.clear();
+      }
    }
 }
 
@@ -40,7 +43,7 @@ public class TracerFilter implements Filter {
    3. 如果既是消费方又是提供方，则将上面两行都填加进去，写成两行
 
 #### 4、logback.xml文件格式的修改
-在logback.xml的`<appender>/<encoder>/<Pattern>`标签下增加[%X{traceId}]配置，例如:
+在logback.xml的`appender/encoder/Pattern`标签下增加[%X{traceId}]配置，例如:
 ```xml
  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
      <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -55,7 +58,3 @@ public class TracerFilter implements Filter {
 ```
 
 #### 5、如此配置下来，在你的服务消费方和提供方每一行日志都会带上traceId了
-
-#### 疑惑：
-1. ttl官网说使用TransmittableThreadLocal时，线程池需要被ttl修饰才能传参，但是我尝试了下使用TransmittableThreadLocal不使用ttl修饰也能传参，但是使用ThreadLocal就不行，基于这个特点MDC就能够实现多线程传参，就像单元测试TtlTest那样
-

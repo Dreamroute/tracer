@@ -28,8 +28,11 @@ public class TracerFilter implements Filter {
         map.put("traceId", UUID.fastUUID().toString(true));
         map.put("traceUserId", UUID.fastUUID().toString(true));
         map.put("traceLogId", UUID.fastUUID().toString(true));
-        tracer.set(map);
-        filterChain.doFilter(servletRequest, servletResponse);
-        tracer.clear();
+        try {
+            tracer.set(map);
+            filterChain.doFilter(servletRequest, servletResponse);
+        } finally {
+            tracer.clear();
+        }
     }
 }
